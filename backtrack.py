@@ -1,4 +1,3 @@
-from itertools import combinations
 from helper_method import *
 
 LIMIT = 2

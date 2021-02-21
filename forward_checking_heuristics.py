@@ -18,31 +18,27 @@ def forward_checking_heuristic_one(sol, iterator, blocks, length):
     """
 
     result = None
-    # ###########################################
-    # from star_list import StarList  #
-    # sol = StarList()  #
-    # ##################################
     if sol.get_size() == sol.get_count():
         result = sol
     else:
-        min_length = float('inf')
-        min_index = -1
-        min_array = []
-        for i in range(int(sol.get_count() / 2), length):
-            if len(blocks[i]) < min_length:
-                min_length = len(blocks[i])
-                min_array = []
-                min_array.append(i)
-                min_index = i
-            elif len(blocks[i]) == min_length:
-                min_array.append(i)
-        new_index = random.choice(min_array)
-        if iterator != new_index:
-            swap_a = blocks[new_index]
-            swap_b = blocks[iterator]
-            blocks[iterator] = swap_a
-            blocks[new_index] = swap_b
-        candidate = list(combinations(blocks[iterator], 2))
+        # min_length = float('inf')
+        # min_index = -1
+        # min_array = []
+        # for i in range(int(sol.get_count() / 2), length):
+        #     if len(blocks[i]) < min_length:
+        #         min_length = len(blocks[i])
+        #         min_array = [i]
+        #         min_index = i
+        #     elif len(blocks[i]) == min_length:
+        #         min_array.append(i)
+        # new_index = random.choice(min_array)
+        # if iterator != new_index:
+        #     swap_a = blocks[new_index]
+        #     swap_b = blocks[iterator]
+        #     blocks[iterator] = swap_a
+        #     blocks[new_index] = swap_b
+        # candidate = list(combinations(blocks[iterator], 2))
+        candidate = h1_most_constrained(sol, iterator, blocks, length)
         for i in candidate:
             index_one = iterator * 2
             index_two = iterator * 2 + 1
@@ -78,15 +74,11 @@ def forward_checking_heuristic_two(sol, iterator, blocks, length):
 
     result = None
     print(sol)
-    # ###########################################
-    # from star_list import StarList  #
-    # sol = StarList()  #
-    # ##################################
     if sol.get_size() == sol.get_count():
         result = sol
     else:
         candidate = list(combinations(blocks[iterator], 2))
-        candidate = sort_candidate(candidate,blocks,length,iterator)
+        candidate = h2_most_constraining(candidate, blocks, length, iterator)
         for i in candidate:
             index_one = iterator * 2
             index_two = iterator * 2 + 1
@@ -121,32 +113,11 @@ def forward_checking_heuristic_hybrid(sol, iterator, blocks, length):
     """
 
     result = None
-    # ###########################################
-    # from star_list import StarList  #
-    # sol = StarList()  #
-    # ##################################
     if sol.get_size() == sol.get_count():
         result = sol
     else:
-        min_length = float('inf')
-        min_index = -1
-        min_array = []
-        for i in range(int(sol.get_count() / 2), length):
-            if len(blocks[i]) < min_length:
-                min_length = len(blocks[i])
-                min_array = []
-                min_array.append(i)
-                min_index = i
-            elif len(blocks[i]) == min_length:
-                min_array.append(i)
-        new_index = random.choice(min_array)
-        if iterator != new_index:
-            swap_a = blocks[new_index]
-            swap_b = blocks[iterator]
-            blocks[iterator] = swap_a
-            blocks[new_index] = swap_b
-        candidate = list(combinations(blocks[iterator], 2))
-        candidate = sort_candidate(candidate,blocks,length,iterator)
+        candidate = h1_most_constrained(sol, iterator, blocks, length)
+        candidate = h2_most_constraining(candidate, blocks, length, iterator)
         for i in candidate:
             index_one = iterator * 2
             index_two = iterator * 2 + 1
@@ -170,11 +141,11 @@ def forward_checking_heuristic_hybrid(sol, iterator, blocks, length):
     return result
 
 
-
 ##############################################################
 from star_list import StarList
 import test
 import draw
+
 
 def tests():
     i = [[43, 44, 36, 51, 35, 34, 42], [30, 29, 21, 13, 22, 14, 5], [8, 16, 24, 23, 7, 15, 6],
@@ -188,6 +159,7 @@ def tests():
         if result is None:
             print('bad')
     print('finish')
+
 
 tests()
 ###############################

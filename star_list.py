@@ -5,6 +5,7 @@ class StarList:
     """
     Class for star list, has three field, a list contain stars, the list size, the count of assigned stars.
     """
+
     def __init__(self, size):
         self.list = []
         self.size = size

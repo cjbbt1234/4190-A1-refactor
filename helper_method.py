@@ -1,7 +1,8 @@
 import random
-
+from itertools import combinations
 
 import math
+
 
 def search_block_num(blocks, position):
     """find which block the position belongs to
@@ -141,10 +142,12 @@ def check_remain_domain(sol, block):
         else:
             min_value = min(block[i])
             curr_block = block[i]
-            right = math.ceil(min_value/length) == math.ceil((min_value+1)/length) and min_value+1 in curr_block
-            down = min_value+length in curr_block
-            down_left = math.ceil((min_value+length-1)/length) == math.ceil((min_value+length)/length) and min_value+length-1 in curr_block
-            down_right = math.ceil((min_value+length+1)/length) == math.ceil((min_value+length)/length) and min_value+length+1 in curr_block
+            right = math.ceil(min_value / length) == math.ceil((min_value + 1) / length) and min_value + 1 in curr_block
+            down = min_value + length in curr_block
+            down_left = math.ceil((min_value + length - 1) / length) == math.ceil(
+                (min_value + length) / length) and min_value + length - 1 in curr_block
+            down_right = math.ceil((min_value + length + 1) / length) == math.ceil(
+                (min_value + length) / length) and min_value + length + 1 in curr_block
             if domain_count == 2:
                 if right or down:
                     result = False
@@ -164,7 +167,6 @@ def check_remain_domain(sol, block):
     return result
 
 
-
 def get_neighbor(position, length):
     """gives neighbors of a given position
 
@@ -172,37 +174,58 @@ def get_neighbor(position, length):
     :param length: length of star battle map, 8x8 map has length 8
     :return: a list of neighbor cells
     """
-    list=None
-    up= position - length
-    down= position + length
-    right= position + 1
-    left= position - 1
-    upleft= position - length - 1
-    upright= position - length + 1
-    downleft= position + length - 1
-    downright= position + length + 1
-    if position==1:
-        list=[right,down,downright]
-    elif position==length:
-        list=[left,downleft,down]
-    elif position==length*length-length+1:
-        list=[up,upright,right]
-    elif position==length*length:
-        list=[left,up,upleft]
-    elif position%length==1:#left edge
-        list=[up,upright,right,down,downright]
-    elif position%length==0:#right edge
-        list=[up,upleft,left,downleft,down]
-    elif position>1 and position<length: #first row
-        list=[left,downleft,down,downright,right]
-    elif position<length*length and position>length*length-length+1:
-        list=[left,upleft,up,upright,right]
+    list = None
+    up = position - length
+    down = position + length
+    right = position + 1
+    left = position - 1
+    upleft = position - length - 1
+    upright = position - length + 1
+    downleft = position + length - 1
+    downright = position + length + 1
+    if position == 1:
+        list = [right, down, downright]
+    elif position == length:
+        list = [left, downleft, down]
+    elif position == length * length - length + 1:
+        list = [up, upright, right]
+    elif position == length * length:
+        list = [left, up, upleft]
+    elif position % length == 1:  # left edge
+        list = [up, upright, right, down, downright]
+    elif position % length == 0:  # right edge
+        list = [up, upleft, left, downleft, down]
+    elif position > 1 and position < length:  # first row
+        list = [left, downleft, down, downright, right]
+    elif position < length * length and position > length * length - length + 1:
+        list = [left, upleft, up, upright, right]
     else:
-        list=[up,upright,upleft,left,right,down,downleft,downright]
+        list = [up, upright, upleft, left, right, down, downleft, downright]
     return list
 
 
-def sort_candidate(candidate,blocks,length,iterator):
+def h1_most_constrained(sol, iterator, blocks, length):
+    min_length = float('inf')
+    min_index = -1
+    min_array = []
+    for i in range(int(sol.get_count() / 2), length):
+        if len(blocks[i]) < min_length:
+            min_length = len(blocks[i])
+            min_array = [i]
+            min_index = i
+        elif len(blocks[i]) == min_length:
+            min_array.append(i)
+    new_index = random.choice(min_array)
+    if iterator != new_index:
+        swap_a = blocks[new_index]
+        swap_b = blocks[iterator]
+        blocks[iterator] = swap_a
+        blocks[new_index] = swap_b
+    candidate = list(combinations(blocks[iterator], 2))
+    return candidate
+
+
+def h2_most_constraining(candidate, blocks, length, iterator):
     """this method sort candidates by how many cell(options) they will remove
 
     :param candidate: candidate turple list

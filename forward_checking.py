@@ -5,7 +5,7 @@ from helper_method import *
 LIMIT = 2
 
 
-def back_track_with_forward_checking(sol, iterator, blocks, length):
+def forward_checking(sol, iterator, blocks, length):
     """This method do back track with forward checking to solve the puzzle
 
     :param sol:solution of star battle
@@ -33,7 +33,7 @@ def back_track_with_forward_checking(sol, iterator, blocks, length):
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
-                    temp = back_track_with_forward_checking(sol, iterator + 1, temp_copy, length)
+                    temp = forward_checking(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp
                         break
@@ -55,13 +55,13 @@ def tests():
 
     i=[[43, 44, 36, 51, 35, 34, 42], [30, 29, 21, 13, 22, 14, 5], [8, 16, 24, 23, 7, 15, 6], [45, 53, 46, 37, 38, 54, 62, 63], [58, 57, 59, 60, 50, 52, 49, 61, 41, 33], [56, 48, 55, 40, 64, 39, 32, 31, 47], [20, 28, 27, 12, 11, 4, 3], [10, 18, 26, 19, 25, 2, 9, 17, 1]]
         # print(i)
-    for i in test.eight_hundred:
-        sol = StarList(8 * 2)
-        result = back_track_with_forward_checking(sol, 0, i, 8)
+    for i in test.ten_hundred:
+        sol = StarList(10 * 2)
+        result = forward_checking(sol, 0, i, 10)
         if(result==None):
             print('bad')
     print('finish')
 
 
-# tests()
+tests()
 ###############################
