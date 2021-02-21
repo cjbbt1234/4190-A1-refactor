@@ -4,7 +4,7 @@ import math
 def get_blocks(file_name):
     """Read file to generate a 2d list
 
-    :param fileName: Name of file
+    :param file_name: Name of file
     :return: Return a 2d list that every list in main list contains its blocks' number
     """
 
@@ -28,6 +28,7 @@ def get_size(lists):
     for block in lists:
         size += len(block)
     return size
+
 
 def get_length(size):
     """Get the length of puzzle, a 8x8=64 puzzle has length 8
