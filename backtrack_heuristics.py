@@ -50,19 +50,10 @@ def back_track_heuristic_one(sol, iterator, blocks, length):
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
             if sol.is_consistent(LIMIT):
-                # temp_copy = deep_copy_2d(blocks)
-                # remove_neighbors(position_one, temp_copy, length)
-                # remove_neighbors(position_two, temp_copy, length)
-                # remove_col_and_row(sol, temp_copy, length)
-                # if check_remain_domain(sol, temp_copy):
-                #     temp = back_track_heuristic_one(sol, iterator + 1, temp_copy, length)
-                #     if temp is not None:
-                #         result = temp
-                #         break
-                    temp = back_track_heuristic_one(sol, iterator + 1, blocks, length)
-                    if temp is not None:
-                        result = temp
-                        break
+                temp = back_track_heuristic_one(sol, iterator + 1, blocks, length)
+                if temp is not None:
+                    result = temp
+                    break
             sol.reset_star(index_one)
             sol.reset_star(index_two)
     return result
@@ -97,15 +88,6 @@ def back_track_heuristic_two(sol, iterator, blocks, length):
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
             if sol.is_consistent(LIMIT):
-                # temp_copy = deep_copy_2d(blocks)
-                # remove_neighbors(position_one, temp_copy, length)
-                # remove_neighbors(position_two, temp_copy, length)
-                # remove_col_and_row(sol, temp_copy, length)
-                # if check_remain_domain(sol, temp_copy):
-                #     temp = back_track_heuristic_two(sol, iterator + 1, temp_copy, length)
-                #     if temp is not None:
-                #         result = temp
-                #         break
                 temp = back_track_heuristic_two(sol, iterator + 1, blocks, length)
                 if temp is not None:
                     result = temp
@@ -165,16 +147,6 @@ def back_track_heuristic_hybrid(sol, iterator, blocks, length):
                     if temp is not None:
                         result = temp
                         break
-                # temp_copy = deep_copy_2d(blocks)
-                # remove_neighbors(position_one, temp_copy, length)
-                # remove_neighbors(position_two, temp_copy, length)
-                # remove_col_and_row(sol, temp_copy, length)
-                # if check_remain_domain(sol, temp_copy):
-                #     temp = back_track_heuristic_hybrid(sol, iterator + 1, temp_copy, length)
-                #     if temp is not None:
-                #         result = temp
-                #         break
-
             sol.reset_star(index_one)
             sol.reset_star(index_two)
     return result
@@ -191,9 +163,9 @@ def tests():
          [45, 53, 46, 37, 38, 54, 62, 63], [58, 57, 59, 60, 50, 52, 49, 61, 41, 33],
          [56, 48, 55, 40, 64, 39, 32, 31, 47], [20, 28, 27, 12, 11, 4, 3], [10, 18, 26, 19, 25, 2, 9, 17, 1]]
     # print(i)
-    for i in test.ten_hundred[0:1]:
-        sol = StarList(10 * 2)
-        result = back_track_heuristic_hybrid(sol, 0, i, 10)
+    for i in test.eight_hundred[0:10]:
+        sol = StarList(8 * 2)
+        result = back_track_heuristic_two(sol, 0, i, 8)
         draw.draw_solution(i,result.get_solution_list())
         if result is None:
             print('bad')

@@ -7,7 +7,7 @@ from helper_method import *
 LIMIT = 2
 
 
-def back_track_heuristic_one(sol, iterator, blocks, length):
+def forward_checking_heuristic_one(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 1
 
     :param sol:solution of star battle
@@ -57,7 +57,7 @@ def back_track_heuristic_one(sol, iterator, blocks, length):
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
-                    temp = back_track_heuristic_one(sol, iterator + 1, temp_copy, length)
+                    temp = forward_checking_heuristic_one(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp
                         break
@@ -66,7 +66,7 @@ def back_track_heuristic_one(sol, iterator, blocks, length):
     return result
 
 
-def back_track_heuristic_two(sol, iterator, blocks, length):
+def forward_checking_heuristic_two(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 2
 
     :param sol:solution of star battle
@@ -101,7 +101,7 @@ def back_track_heuristic_two(sol, iterator, blocks, length):
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
-                    temp = back_track_heuristic_two(sol, iterator + 1, temp_copy, length)
+                    temp = forward_checking_heuristic_two(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp
                         break
@@ -110,7 +110,7 @@ def back_track_heuristic_two(sol, iterator, blocks, length):
     return result
 
 
-def back_track_heuristic_hybrid(sol, iterator, blocks, length):
+def forward_checking_heuristic_hybrid(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 1
 
     :param sol:solution of star battle
@@ -161,7 +161,7 @@ def back_track_heuristic_hybrid(sol, iterator, blocks, length):
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
-                    temp = back_track_heuristic_hybrid(sol, iterator + 1, temp_copy, length)
+                    temp = forward_checking_heuristic_hybrid(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp
                         break
@@ -181,9 +181,9 @@ def tests():
          [45, 53, 46, 37, 38, 54, 62, 63], [58, 57, 59, 60, 50, 52, 49, 61, 41, 33],
          [56, 48, 55, 40, 64, 39, 32, 31, 47], [20, 28, 27, 12, 11, 4, 3], [10, 18, 26, 19, 25, 2, 9, 17, 1]]
     # print(i)
-    for i in test.ten_hundred[0:100]:
+    for i in test.ten_hundred[0:10]:
         sol = StarList(10 * 2)
-        result = back_track_heuristic_hybrid(sol, 0, i, 10)
+        result = forward_checking_heuristic_hybrid(sol, 0, i, 10)
         # draw.draw_solution(i,result.get_solution_list())
         if result is None:
             print('bad')
