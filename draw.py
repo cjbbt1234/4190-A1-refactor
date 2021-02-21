@@ -14,7 +14,7 @@ def draw_solution(blocks, solution):
     """
 
     window = Tk()
-    window.title("Star Battle")
+    window.title("star Battle")
     star = '\u2605'
     window.geometry('1280x720')
     for index in range(len(blocks)):
