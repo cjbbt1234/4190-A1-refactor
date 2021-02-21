@@ -1,10 +1,11 @@
 
-from itertools import combinations
+
 from helper_method import *
 
 LIMIT = 2
 
 
+@Counter
 def forward_checking(sol, iterator, blocks, length):
     """This method do back track with forward checking to solve the puzzle
 
@@ -27,7 +28,7 @@ def forward_checking(sol, iterator, blocks, length):
             block_two = search_block_num(blocks, position_two)  # find which block a,b belongs to
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
-            if sol.is_consistent(LIMIT):
+            if sol.is_consistent(LIMIT):  # if current assigned stars are consistent
                 temp_copy = deep_copy_2d(blocks)
                 remove_neighbors(position_one, temp_copy, length)
                 remove_neighbors(position_two, temp_copy, length)
@@ -57,7 +58,9 @@ def tests():
         # print(i)
     for i in test.ten_hundred:
         sol = StarList(10 * 2)
+        forward_checking.counter = 0
         result = forward_checking(sol, 0, i, 10)
+        print(forward_checking.counter)
         if(result==None):
             print('bad')
     print('finish')

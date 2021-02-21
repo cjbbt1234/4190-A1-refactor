@@ -1,12 +1,10 @@
-# old 'heuristics.py' file
 
-import random
-from itertools import combinations
 from helper_method import *
 
 LIMIT = 2
 
 
+@Counter
 def forward_checking_heuristic_one(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 1
 
@@ -62,6 +60,7 @@ def forward_checking_heuristic_one(sol, iterator, blocks, length):
     return result
 
 
+@Counter
 def forward_checking_heuristic_two(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 2
 
@@ -102,6 +101,7 @@ def forward_checking_heuristic_two(sol, iterator, blocks, length):
     return result
 
 
+@Counter
 def forward_checking_heuristic_hybrid(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 1
 
@@ -154,7 +154,9 @@ def tests():
     # print(i)
     for i in test.ten_hundred[0:10]:
         sol = StarList(10 * 2)
+        forward_checking_heuristic_hybrid.counter = 0
         result = forward_checking_heuristic_hybrid(sol, 0, i, 10)
+        print(forward_checking_heuristic_hybrid.counter)
         # draw.draw_solution(i,result.get_solution_list())
         if result is None:
             print('bad')

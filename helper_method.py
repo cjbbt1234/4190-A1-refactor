@@ -4,6 +4,20 @@ from itertools import combinations
 import math
 
 
+class Counter(object):
+    """
+    use to counter number node iterated
+    """
+
+    def __init__(self, fun):
+        self._fun = fun
+        self.counter = 0
+
+    def __call__(self, *args, **kwargs):
+        self.counter += 1
+        return self._fun(*args, **kwargs)
+
+
 def search_block_num(blocks, position):
     """find which block the position belongs to
 

@@ -3,6 +3,7 @@ from helper_method import *
 LIMIT = 2
 
 
+@Counter
 def back_track(sol, iterator, blocks, length):
     """This method do back track to solve the puzzle
 
@@ -25,7 +26,7 @@ def back_track(sol, iterator, blocks, length):
             block_two = search_block_num(blocks, position_two)  # find which block a,b belongs to
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
-            if sol.is_consistent(LIMIT):
+            if sol.is_consistent(LIMIT):  # if current assigned stars are consistent
                 temp = back_track(sol, iterator + 1, blocks, length)
                 if temp is not None:
                     result = temp

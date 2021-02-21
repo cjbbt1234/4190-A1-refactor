@@ -3,6 +3,7 @@ from helper_method import *
 LIMIT = 2
 
 
+@Counter
 def back_track_heuristic_one(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 1
 
@@ -26,7 +27,7 @@ def back_track_heuristic_one(sol, iterator, blocks, length):
             block_two = search_block_num(blocks, position_two)  # find which block a,b belongs to
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
-            if sol.is_consistent(LIMIT):
+            if sol.is_consistent(LIMIT):  # if current assigned stars are consistent
                 temp = back_track_heuristic_one(sol, iterator + 1, blocks, length)
                 if temp is not None:
                     result = temp
@@ -36,6 +37,7 @@ def back_track_heuristic_one(sol, iterator, blocks, length):
     return result
 
 
+@Counter
 def back_track_heuristic_two(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 2
 
@@ -60,7 +62,7 @@ def back_track_heuristic_two(sol, iterator, blocks, length):
             block_two = search_block_num(blocks, position_two)  # find which block a,b belongs to
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
-            if sol.is_consistent(LIMIT):
+            if sol.is_consistent(LIMIT):  # if current assigned stars are consistent
                 temp = back_track_heuristic_two(sol, iterator + 1, blocks, length)
                 if temp is not None:
                     result = temp
@@ -70,6 +72,7 @@ def back_track_heuristic_two(sol, iterator, blocks, length):
     return result
 
 
+@Counter
 def back_track_heuristic_hybrid(sol, iterator, blocks, length):
     """This method solve the star battle with heuristic 1
 
@@ -94,7 +97,7 @@ def back_track_heuristic_hybrid(sol, iterator, blocks, length):
             block_two = search_block_num(blocks, position_two)  # find which block a,b belongs to
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
-            if sol.is_consistent(LIMIT):
+            if sol.is_consistent(LIMIT):  # if current assigned stars are consistent
                 temp = back_track_heuristic_hybrid(sol, iterator + 1, blocks, length)
                 if temp is not None:
                     result = temp
@@ -104,11 +107,11 @@ def back_track_heuristic_hybrid(sol, iterator, blocks, length):
     return result
 
 
-
 ##############################################################
 from star_list import StarList
 import test
 import draw
+
 
 def tests():
     i = [[43, 44, 36, 51, 35, 34, 42], [30, 29, 21, 13, 22, 14, 5], [8, 16, 24, 23, 7, 15, 6],
@@ -118,10 +121,11 @@ def tests():
     for i in test.eight_hundred[0:10]:
         sol = StarList(8 * 2)
         result = back_track_heuristic_hybrid(sol, 0, i, 8)
-        draw.draw_solution(i,result.get_solution_list())
+        draw.draw_solution(i, result.get_solution_list())
         if result is None:
             print('bad')
     print('finish')
+
 
 tests()
 ###############################
