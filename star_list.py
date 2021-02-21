@@ -3,7 +3,7 @@ from star import Star
 
 class StarList:
     """
-    Class for star list, has three field, a list contain stars, the list size, the count of assignment stars.
+    Class for star list, has three field, a list contain stars, the list size, the count of assigned stars.
     """
     def __init__(self, size):
         self.list = []
@@ -67,7 +67,7 @@ class StarList:
 
     def neighbor_check(self):
         """
-        Check if current assignment stars in star list is consist with neighbor constrain
+        Check if current assigned stars in star list is consist with neighbor constrain
         :return: Boolean
         """
         length = self.size / 2
@@ -83,7 +83,7 @@ class StarList:
 
     def block_check(self, limit):
         """
-        Check if current assignment stars in star list is consist with block constrain
+        Check if current assigned stars in star list is consist with block constrain
         :param limit: the number stars each block, row, column must contain
         :return: Boolean
         """
@@ -99,7 +99,7 @@ class StarList:
 
     def row_check(self, limit):
         """
-        Check if current assignment stars in star list is consist with row constrain
+        Check if current assigned stars in star list is consist with row constrain
         :param limit: the number stars each block, row, column must contain
         :return: Boolean
         """
@@ -120,7 +120,7 @@ class StarList:
 
     def col_check(self, limit):
         """
-        Check if current assignment stars in star list is consist with column constrain
+        Check if current assigned stars in star list is consist with column constrain
         :param limit: the number stars each block, row, column must contain
         :return: Boolean
         """
@@ -141,7 +141,7 @@ class StarList:
 
     def is_consistent(self, limit):
         """
-        Check if current assignment stars in star list is consist with all constrains
+        Check if current assigned stars in star list is consist with all constrains
         :param limit: the number stars each block, row, column must contain
         :return: Boolean
         """
