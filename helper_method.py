@@ -93,26 +93,27 @@ def check_remain_domain(sol, block):
     un_sign_block = sol.get_count()
     for i in range(un_sign_block, length):
         domain_count = len(block[i])
-        min_value = min(block[i])
-        curr_block = block[i]
-        if domain_count <= 2 and min_value+1 in curr_block:
-            result = False
-            break
-        elif domain_count >= 5:
-            continue
-        else:
-            if domain_count == 3:
-                if (min_value + 1 in curr_block and (
-                        min_value + length in curr_block or min_value + length + 1 in curr_block)):
-                    result = False
-                    break
-                elif (min_value + length in block[i] and (
-                        min_value + length - 1 in curr_block or min_value + length + 1 in curr_block)):
-                    result = False
-                    break
-            elif domain_count == 4:
-                if (
-                        min_value + 1 in curr_block and min_value + length in curr_block and min_value + length + 1 in curr_block):
-                    result = False
-                    break
+        if domain_count > 0:
+            min_value = min(block[i])
+            curr_block = block[i]
+            if domain_count <= 2 and min_value+1 in curr_block:
+                result = False
+                break
+            elif domain_count >= 5:
+                continue
+            else:
+                if domain_count == 3:
+                    if (min_value + 1 in curr_block and (
+                            min_value + length in curr_block or min_value + length + 1 in curr_block)):
+                        result = False
+                        break
+                    elif (min_value + length in block[i] and (
+                            min_value + length - 1 in curr_block or min_value + length + 1 in curr_block)):
+                        result = False
+                        break
+                elif domain_count == 4:
+                    if (
+                            min_value + 1 in curr_block and min_value + length in curr_block and min_value + length + 1 in curr_block):
+                        result = False
+                        break
     return result
