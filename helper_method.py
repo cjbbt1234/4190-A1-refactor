@@ -1,3 +1,6 @@
+import random
+
+
 def search_block_num(blocks, position):
     """find which block the position belongs to
 
@@ -119,4 +122,93 @@ def check_remain_domain(sol, block):
         else:
             result = False
             break
+    return result
+
+
+
+def get_neighbor(position, length):
+    """gives neighbors of a given position
+
+    :param position: position of cells
+    :param length: length of star battle map, 8x8 map has length 8
+    :return: a list of neighbor cells
+    """
+    list=None
+    up= position - length
+    down= position + length
+    right= position + 1
+    left= position - 1
+    upleft= position - length - 1
+    upright= position - length + 1
+    downleft= position + length - 1
+    downright= position + length + 1
+    if position==1:
+        list=[right,down,downright]
+    elif position==length:
+        list=[left,downleft,down]
+    elif position==length*length-length+1:
+        list=[up,upright,right]
+    elif position==length*length:
+        list=[left,up,upleft]
+    elif position%length==1:#left edge
+        list=[up,upright,right,down,downright]
+    elif position%length==0:#right edge
+        list=[up,upleft,left,downleft,down]
+    elif position>1 and position<length: #first row
+        list=[left,downleft,down,downright,right]
+    elif position<length*length and position>length*length-length+1:
+        list=[left,upleft,up,upright,right]
+    else:
+        list=[up,upright,upleft,left,right,down,downleft,downright]
+    return list
+
+
+def sort_candidate(candidate,blocks,length,iterator):
+    """this method sort candidates by how many cell(options) they will remove
+
+    :param candidate: candidate turple list
+    :param blocks: blocks information, is a 2d list
+    :param length: length of star battle map, 8x8 map has length 8
+    :param iterator: record which block we are working on
+    :return: a sorted candidates list
+    """
+    candidate_sort = []
+    for can in candidate:
+        (position_x, position_y) = can
+        row = set()
+        col = set()
+        # if same row:
+        if int((position_x - 1) / length) == int((position_y - 1) / length):
+            r = int((position_x - 1) / length)
+            row = set(range(r * length + 1, r * length + length + 1))
+        # if same col
+        if (position_x - 1) % length == (position_y - 1) % length:
+            c = (position_x - 1) % length
+            col = set(range(c + 1, length * length + 1, length))
+        # get all neighbor of position_x and position_y
+        neighborX = set(get_neighbor(position_x, length))
+        neighborY = set(get_neighbor(position_y, length))
+        u = row.union(col).union(neighborX).union(neighborY)
+        all = list(u)
+        countInBlock = 0
+        countAllBlock = 0
+        for i in all:
+            if i in blocks[iterator]:
+                countInBlock += 1
+            for j in blocks:
+                if i in j:
+                    countAllBlock += 1
+                    break
+        candidate_sort.append((can, countAllBlock - countInBlock))
+    sortedCand = sorted(candidate_sort, key=lambda x: x[1])
+    for i in range(len(sortedCand) - 1):
+        j = i + 1
+        if sortedCand[i][1] == sortedCand[j][1]:
+            if random.random() > 0.5:
+                temp = sortedCand[i]
+                sortedCand[i] = sortedCand[j]
+                sortedCand[j] = temp
+    result = []
+    for i in sortedCand:
+        result.append(i[0])
     return result

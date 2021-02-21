@@ -15,10 +15,6 @@ def back_track_with_forward_checking(sol, iterator, blocks, length):
     :return:return solution of star battle
     """
     result = None
-    # ###########################################
-    # from star_list import StarList  #
-    # sol = StarList()  #
-    # ##################################
     if sol.get_size() == sol.get_count():
         result = sol
     else:
@@ -46,6 +42,11 @@ def back_track_with_forward_checking(sol, iterator, blocks, length):
     return result
 
 
+
+
+
+
+##############################################################
 from star_list import StarList
 import test
 
@@ -59,6 +60,8 @@ def tests():
         result = back_track_with_forward_checking(sol, 0, i, 8)
         if(result==None):
             print('bad')
+    print('finish')
 
 
-tests()
+# tests()
+###############################
