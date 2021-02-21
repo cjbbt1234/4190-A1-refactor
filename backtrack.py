@@ -32,8 +32,8 @@ def back_track(sol, iterator, blocks, length):
                 if temp is not None:
                     result=temp
                     break
-                sol.reset_star(index_one)
-                sol.reset_star(index_two)
+            sol.reset_star(index_one)
+            sol.reset_star(index_two)
     return result
 
 def test():
