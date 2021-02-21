@@ -4,20 +4,6 @@ from itertools import combinations
 import math
 
 
-class Counter(object):
-    """
-    use to counter number node iterated
-    """
-
-    def __init__(self, fun):
-        self._fun = fun
-        self.counter = 0
-
-    def __call__(self, *args, **kwargs):
-        self.counter += 1
-        return self._fun(*args, **kwargs)
-
-
 def search_block_num(blocks, position):
     """find which block the position belongs to
 
@@ -188,7 +174,7 @@ def get_neighbor(position, length):
     :param length: length of star battle map, 8x8 map has length 8
     :return: a list of neighbor cells
     """
-    list = None
+    neighbor_list = None
     up = position - length
     down = position + length
     right = position + 1
@@ -198,24 +184,24 @@ def get_neighbor(position, length):
     downleft = position + length - 1
     downright = position + length + 1
     if position == 1:
-        list = [right, down, downright]
+        neighbor_list = [right, down, downright]
     elif position == length:
-        list = [left, downleft, down]
+        neighbor_list = [left, downleft, down]
     elif position == length * length - length + 1:
-        list = [up, upright, right]
+        neighbor_list = [up, upright, right]
     elif position == length * length:
-        list = [left, up, upleft]
+        neighbor_list = [left, up, upleft]
     elif position % length == 1:  # left edge
-        list = [up, upright, right, down, downright]
+        neighbor_list = [up, upright, right, down, downright]
     elif position % length == 0:  # right edge
-        list = [up, upleft, left, downleft, down]
-    elif position > 1 and position < length:  # first row
-        list = [left, downleft, down, downright, right]
-    elif position < length * length and position > length * length - length + 1:
-        list = [left, upleft, up, upright, right]
+        neighbor_list = [up, upleft, left, downleft, down]
+    elif 1 < position < length:  # first row
+        neighbor_list = [left, downleft, down, downright, right]
+    elif length * length > position > length * length - length + 1:  # last row
+        neighbor_list = [left, upleft, up, upright, right]
     else:
-        list = [up, upright, upleft, left, right, down, downleft, downright]
-    return list
+        neighbor_list = [up, upright, upleft, left, right, down, downleft, downright]
+    return neighbor_list
 
 
 def h1_most_constrained(sol, iterator, blocks, length):
@@ -242,7 +228,7 @@ def h1_most_constrained(sol, iterator, blocks, length):
 def h2_most_constraining(candidate, blocks, length, iterator):
     """this method sort candidates by how many cell(options) they will remove
 
-    :param candidate: candidate turple list
+    :param candidate: candidate tuple list
     :param blocks: blocks information, is a 2d list
     :param length: length of star battle map, 8x8 map has length 8
     :param iterator: record which block we are working on
@@ -262,29 +248,29 @@ def h2_most_constraining(candidate, blocks, length, iterator):
             c = (position_x - 1) % length
             col = set(range(c + 1, length * length + 1, length))
         # get all neighbor of position_x and position_y
-        neighborX = set(get_neighbor(position_x, length))
-        neighborY = set(get_neighbor(position_y, length))
-        u = row.union(col).union(neighborX).union(neighborY)
-        all = list(u)
-        countInBlock = 0
-        countAllBlock = 0
-        for i in all:
+        neighbor_x = set(get_neighbor(position_x, length))
+        neighbor_y = set(get_neighbor(position_y, length))
+        u = row.union(col).union(neighbor_x).union(neighbor_y)
+        all_positions = list(u)
+        count_in_block = 0
+        count_all_block = 0
+        for i in all_positions:
             if i in blocks[iterator]:
-                countInBlock += 1
+                count_in_block += 1
             for j in blocks:
                 if i in j:
-                    countAllBlock += 1
+                    count_all_block += 1
                     break
-        candidate_sort.append((can, countAllBlock - countInBlock))
-    sortedCand = sorted(candidate_sort, key=lambda x: x[1])
-    for i in range(len(sortedCand) - 1):
+        candidate_sort.append((can, count_all_block - count_in_block))
+    sorted_cand = sorted(candidate_sort, key=lambda x: x[1])
+    for i in range(len(sorted_cand) - 1):
         j = i + 1
-        if sortedCand[i][1] == sortedCand[j][1]:
+        if sorted_cand[i][1] == sorted_cand[j][1]:
             if random.random() > 0.5:
-                temp = sortedCand[i]
-                sortedCand[i] = sortedCand[j]
-                sortedCand[j] = temp
+                temp = sorted_cand[i]
+                sorted_cand[i] = sorted_cand[j]
+                sorted_cand[j] = temp
     result = []
-    for i in sortedCand:
+    for i in sorted_cand:
         result.append(i[0])
     return result

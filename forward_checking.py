@@ -41,30 +41,3 @@ def forward_checking(sol, iterator, blocks, length):
             sol.reset_star(index_one)
             sol.reset_star(index_two)
     return result
-
-
-
-
-
-
-##############################################################
-from star_list import StarList
-import test
-
-
-def tests():
-
-    i=[[43, 44, 36, 51, 35, 34, 42], [30, 29, 21, 13, 22, 14, 5], [8, 16, 24, 23, 7, 15, 6], [45, 53, 46, 37, 38, 54, 62, 63], [58, 57, 59, 60, 50, 52, 49, 61, 41, 33], [56, 48, 55, 40, 64, 39, 32, 31, 47], [20, 28, 27, 12, 11, 4, 3], [10, 18, 26, 19, 25, 2, 9, 17, 1]]
-        # print(i)
-    for i in test.ten_hundred:
-        sol = StarList(10 * 2)
-        forward_checking.counter = 0
-        result = forward_checking(sol, 0, i, 10)
-        print(forward_checking.counter)
-        if(result==None):
-            print('bad')
-    print('finish')
-
-
-tests()
-###############################
