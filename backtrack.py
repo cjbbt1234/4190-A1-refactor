@@ -5,7 +5,7 @@ LIMIT = 2
 
 
 def back_track(sol, iterator, blocks, length):
-    """This method do back trace to solve the puzzle
+    """This method do back track to solve the puzzle
 
     :param sol:solution of star battle
     :param iterator:record which block we are working on
