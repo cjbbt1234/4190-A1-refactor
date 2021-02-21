@@ -116,4 +116,7 @@ def check_remain_domain(sol, block):
                             min_value + 1 in curr_block and min_value + length in curr_block and min_value + length + 1 in curr_block):
                         result = False
                         break
+        else:
+            result = False
+            break
     return result
