@@ -1,6 +1,8 @@
 import random
 
 
+import math
+
 def search_block_num(blocks, position):
     """find which block the position belongs to
 
@@ -90,38 +92,75 @@ def remove_col_and_row(sol, block, length):
                         l.remove(j)
 
 
+# def check_remain_domain(sol, block):
+#     result = True
+#     length = int(sol.get_size() / 2)
+#     un_sign_block = sol.get_count()
+#     for i in range(un_sign_block, length):
+#         domain_count = len(block[i])
+#         if domain_count > 0:
+#             min_value = min(block[i])
+#             curr_block = block[i]
+#             if domain_count <= 2 and min_value+1 in curr_block:
+#                 result = False
+#                 break
+#             elif domain_count >= 5:
+#                 continue
+#             else:
+#                 if domain_count == 3:
+#                     if (min_value + 1 in curr_block and (
+#                             min_value + length in curr_block or min_value + length + 1 in curr_block)):
+#                         result = False
+#                         break
+#                     elif (min_value + length in block[i] and (
+#                             min_value + length - 1 in curr_block or min_value + length + 1 in curr_block)):
+#                         result = False
+#                         break
+#                 elif domain_count == 4:
+#                     if (
+#                             min_value + 1 in curr_block and min_value + length in curr_block and min_value + length + 1 in curr_block):
+#                         result = False
+#                         break
+#         else:
+#             result = False
+#             break
+#     return result
+
+
 def check_remain_domain(sol, block):
     result = True
     length = int(sol.get_size() / 2)
     un_sign_block = sol.get_count()
     for i in range(un_sign_block, length):
         domain_count = len(block[i])
-        if domain_count > 0:
-            min_value = min(block[i])
-            curr_block = block[i]
-            if domain_count <= 2 and min_value+1 in curr_block:
-                result = False
-                break
-            elif domain_count >= 5:
-                continue
-            else:
-                if domain_count == 3:
-                    if (min_value + 1 in curr_block and (
-                            min_value + length in curr_block or min_value + length + 1 in curr_block)):
-                        result = False
-                        break
-                    elif (min_value + length in block[i] and (
-                            min_value + length - 1 in curr_block or min_value + length + 1 in curr_block)):
-                        result = False
-                        break
-                elif domain_count == 4:
-                    if (
-                            min_value + 1 in curr_block and min_value + length in curr_block and min_value + length + 1 in curr_block):
-                        result = False
-                        break
-        else:
+        if domain_count >= 5:
+            continue
+        elif domain_count <= 1:
             result = False
             break
+        else:
+            min_value = min(block[i])
+            curr_block = block[i]
+            right = math.ceil(min_value/length) == math.ceil((min_value+1)/length) and min_value+1 in curr_block
+            down = min_value+length in curr_block
+            down_left = math.ceil((min_value+length-1)/length) == math.ceil((min_value+length)/length) and min_value+length-1 in curr_block
+            down_right = math.ceil((min_value+length+1)/length) == math.ceil((min_value+length)/length) and min_value+length+1 in curr_block
+            if domain_count == 2:
+                if right or down:
+                    result = False
+                    break
+            elif domain_count == 3:
+                if down:
+                    if right or down_left or down_right:
+                        result = False
+                        break
+                elif down_right and right:
+                    result = False
+                    break
+            elif domain_count == 4:
+                if right and down and down_right:
+                    result = False
+                    break
     return result
 
 
