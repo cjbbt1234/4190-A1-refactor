@@ -19,23 +19,6 @@ def forward_checking_heuristic_one(sol, iterator, blocks, length):
     if sol.get_size() == sol.get_count():
         result = sol
     else:
-        # min_length = float('inf')
-        # min_index = -1
-        # min_array = []
-        # for i in range(int(sol.get_count() / 2), length):
-        #     if len(blocks[i]) < min_length:
-        #         min_length = len(blocks[i])
-        #         min_array = [i]
-        #         min_index = i
-        #     elif len(blocks[i]) == min_length:
-        #         min_array.append(i)
-        # new_index = random.choice(min_array)
-        # if iterator != new_index:
-        #     swap_a = blocks[new_index]
-        #     swap_b = blocks[iterator]
-        #     blocks[iterator] = swap_a
-        #     blocks[new_index] = swap_b
-        # candidate = list(combinations(blocks[iterator], 2))
         candidate = h1_most_constrained(sol, iterator, blocks, length)
         for i in candidate:
             index_one = iterator * 2

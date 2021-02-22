@@ -5,6 +5,9 @@ import math
 
 
 class Counter(object):
+    """
+    Use to count iteration of recursion
+    """
     def __init__(self, fun):
         self._fun = fun
         self.counter = 0

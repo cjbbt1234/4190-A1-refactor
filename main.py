@@ -8,8 +8,20 @@ from backtrack_heuristics import *
 from forward_checking import forward_checking
 from forward_checking_heuristics import *
 
-WAIT_TIME = 600
-LIMIT = 2
+"""
+Course: COMP 4190 Artificial Intelligence by Cuneyt Gurcan Akcora, University of Manitoba, Canada
+Assignment: Constraint Satisfaction Problem – 2-Star Puzzles
+Date: Feb.22 2021
+Project aim:
+This project is use to solve 2-star star battle and investigate efficiency of backtrack and forward checking algorithm.
+Project author:
+    Group 6:
+    Siyuan Shang, id 7812442
+    Yubo Chen, id 7811477
+"""
+
+WAIT_TIME = 600  # The time of wait the algorithm to solve a puzzle
+LIMIT = 2  # Number of stars in row,column and blocks
 
 
 def back_track_std(solution, blocks, length):
@@ -90,7 +102,7 @@ def forward_check_hybrid(solution, blocks, length):
 
 def solve_puzzle(length, blocks, fnc):
     """
-    solve the puzzle use fnc function
+    solve the puzzle use fnc algorithm
 
     :param length: the side length of the puzzle
     :param blocks: the list contain all blocks
@@ -106,11 +118,11 @@ def solve_puzzle(length, blocks, fnc):
     if solution.get_count() == length * 2:
         print('Solution is:', solution.get_solution_list())
         draw_solution(blocks, solution.get_solution_list())
+        # Draw the puzzle and solution in UI, please remember the time you watch the result will also count in total
+        # running time of the process. This will cause abort from process when the UI display time reach 10 minute.
+        # But the display time will not count in recursion time. When you close the UI, it will return and go for next.
     else:
         print('No Solution found !')
-    # Draw the puzzle and solution in UI, please remember the time you watch the result will also count in total
-    # running time of the process. This will case abort from this process when the UI display time reach 10 minute.
-    # But the display time will not count in recursion time. When you close the UI, it will return and go for next.
 
 
 def process_solve_puzzle(length, blocks, fnc):
@@ -129,7 +141,7 @@ def process_solve_puzzle(length, blocks, fnc):
     process.join(WAIT_TIME)
 
     if process.is_alive():
-        print(fnc.__name__, " stucked ... let's kill it...No solution")
+        print(fnc.__name__, " get stuck ... let's kill it...No solution")
         print("Or it may because you keep the puzzle UI open for a long time and it reach the time limit...")
         print()
         print()
@@ -141,16 +153,18 @@ def process_solve_puzzle(length, blocks, fnc):
 #######################################################################################################################
 
 if __name__ == '__main__':
+
+    print("Program start...")
+
     file_name_1 = "grid8x8.txt"
     file_name_2 = "grid10x10.txt"
     file_name_3 = "grid14x14.txt"
-    file_name_4 = "grid12x12.txt"
-    file_name_5 = "10x10 non-solution.txt"
 
-    file_list = [file_name_5, file_name_2, file_name_3]
+    file_list = [file_name_1, file_name_2, file_name_3]
 
     for curr_puzzle in file_list:
         print("Begin to solve ", curr_puzzle)
+
         puzzle = get_blocks(curr_puzzle)
         size = get_size(puzzle)
         side_length = get_length(size)
@@ -168,6 +182,7 @@ if __name__ == '__main__':
         # process_solve_puzzle(side_length, puzzle, forward_check_h2)
 
         print('Finish solve ', curr_puzzle)
+        print()
         print()
 
     print("Finish solve all 3 puzzles, program end.")
