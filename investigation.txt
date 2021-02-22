@@ -1,22 +1,23 @@
 14x14
                     back_track_h1       back_track_h2       back_track_hybrid            forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
-time                     276.94             >10min                 42.24                             0.072                 >10min                   0.018                    354544%
-number of nodes         3878                  x                     515                             44                       x                        18                      7085%
+time(second)            276.94             >10min                 42.24                           0.072                 >10min                      0.018                    354544%
+number of nodes         3878                  x                     515                             44                     x                          18                      7085%
 
 
 10x10
                     back_track_h1       back_track_h2       back_track_hybrid             forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
-time                      40.8              34                   7.1                            0.3                         6.64                     0.13                      1058%
-number of nodes            7466             6062                   1040                             450                        8281                    206                      63%
+time(second)               40.8              34                   7.1                            0.3                         6.64                     0.13                    1058%
+number of nodes            7466             6062                   1040                          450                         8281                     206                      63%
 
 8x8
                       back_track_h1       back_track_h2       back_track_hybrid            forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
-time                       0.5                1.35                  1.17                             0.0094                     0.23                     0.018                 1073%
+time(second)               0.5                1.35                  1.17                             0.0094                     0.23                     0.018                 1073%
 number of nodes            284                575                    510                               30                        504                       47                   136%
 
-cost_of_fc=forward_checking_h1+forward_checking_h2+forward_checking_hybrid
-cost_of_bt=back_track_h1+back_track_h2+back_track_hybrid
+cost_of_fc(time/nodes)=forward_checking_h1+forward_checking_h2+forward_checking_hybrid
+cost_of_bt(time/nodes)=back_track_h1+back_track_h2+back_track_hybrid
 percentage=(cost_of_bt - cost_of_fc) / cost_of_fc
+percentage shows how many times the backtrack algorithm is slower than forward checking
 
 
 Overall, forward checking has much faster speed than the backtrack. It is forward checking can great remove a lot of position in the map such that it can reduce the search space. Heuristic 1 is better than heuristic 2 in average, and hybrid heuristic is the most stable one. Forward checking with hybrid(H3) has best performance in average.
