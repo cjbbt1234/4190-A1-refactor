@@ -4,6 +4,19 @@ from itertools import combinations
 import math
 
 
+class Counter(object):
+    def __init__(self, fun):
+        self._fun = fun
+        self.counter = 0
+
+    def __call__(self, *args, **kwargs):
+        self.counter += 1
+        return self._fun(*args, **kwargs)
+
+    def reset_counter(self):
+        self.counter = 0
+
+
 def search_block_num(blocks, position):
     """find which block the position belongs to
 
@@ -143,7 +156,7 @@ def check_remain_domain(sol, block):
         domain_count = len(block[i])
         if domain_count >= 5:  # number of available space in current blocks >5, must have possible assignment for two stars
             continue
-        elif domain_count <= 1: # number of available space in current blocks <=1,  impossible assignment for two stars
+        elif domain_count <= 1:  # number of available space in current blocks <=1,  impossible assignment for two stars
             result = False
             break
         else:
@@ -215,6 +228,15 @@ def get_neighbor(position, length):
 
 
 def h1_most_constrained(sol, iterator, blocks, length):
+    """
+
+
+    :param sol: current solution star list
+    :param blocks: blocks information, is a 2d list
+    :param length: length of star battle map, 8x8 map has length 8
+    :param iterator: record which block we are working on
+    :return:
+    """
     min_length = float('inf')
     min_index = -1
     min_array = []
