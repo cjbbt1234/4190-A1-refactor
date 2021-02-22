@@ -58,50 +58,52 @@ fc_node=0
 fc_h1_node=0
 fc_h2_node=0
 fc_hy_node=0
-for i in range(1):
-    blocks=read.get_blocks('grid10x10.txt')
-    solution=StarList(10*2)
+for i in range(100):
+    print('****************************')
+    blocks=eight_hundred[i]
+    solution=StarList(8*2)
     forward_checking.counter=0
     start=timeit.default_timer()
-    forward_checking(solution,0,blocks,10)
+    forward_checking(solution,0,blocks,8)
     stop=timeit.default_timer()
     print('forward_checking time:', stop-start)
     print('forward_checking nodes:',forward_checking.counter)
     fc_time+= (stop-start)
     fc_node+=forward_checking.counter
 
-    blocks=read.get_blocks('grid10x10.txt')
-    solution=StarList(10*2)
+    solution=StarList(8*2)
     forward_checking_heuristic_one.counter=0
     start=timeit.default_timer()
-    forward_checking_heuristic_one(solution,0,blocks,10)
+    forward_checking_heuristic_one(solution,0,blocks,8)
     stop=timeit.default_timer()
     print('forward_checking h1 time:', stop-start)
     print('forward_checking h1 nodes:',forward_checking_heuristic_one.counter)
+    print(blocks)
     fc_h1_time+= (stop-start)
     fc_h1_node+=forward_checking_heuristic_one.counter
 
-    blocks=read.get_blocks('grid10x10.txt')
-    solution=StarList(10*2)
+    solution=StarList(8*2)
     forward_checking_heuristic_two.counter=0
     start=timeit.default_timer()
-    forward_checking_heuristic_two(solution,0,blocks,10)
+    forward_checking_heuristic_two(solution,0,blocks,8)
     stop=timeit.default_timer()
     print('forward_checking h2 time:', stop-start)
     print('forward_checking h2 nodes:',forward_checking_heuristic_two.counter)
+    print(blocks)
     fc_h2_time+= (stop-start)
     fc_h2_node+=forward_checking_heuristic_two.counter
 
-    blocks=read.get_blocks('grid10x10.txt')
-    solution=StarList(10*2)
+    solution=StarList(8*2)
     forward_checking_heuristic_hybrid.counter=0
     start=timeit.default_timer()
-    forward_checking_heuristic_hybrid(solution,0,blocks,10)
+    forward_checking_heuristic_hybrid(solution,0,blocks,8)
     stop=timeit.default_timer()
     print('forward_checking hybrid time:', stop-start)
     print('forward_checking hybrid nodes:',forward_checking_heuristic_hybrid.counter)
+    print(blocks)
     fc_hy_time+= (stop-start)
     fc_hy_node+=forward_checking_heuristic_hybrid.counter
+    print(i,'************\n')
 
 print('--------------------------------------')
 
