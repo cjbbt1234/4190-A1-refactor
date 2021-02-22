@@ -36,77 +36,77 @@ def test_five_puzzle(battles,num,length):
         i = battles[int(random.random()*len(battles))]
 
         solution=StarList(length*2)
-        back_track.counter=0
+        forward_checking.counter=0
         start=timeit.default_timer()
-        back_track(solution,0,i,length)
+        forward_checking(solution,0,i,length)
         stop=timeit.default_timer()
         timer += (stop-start)
-        nodes += back_track.counter
+        nodes += forward_checking.counter
     print(str(length),'x',str(length), 'average time is:', timer/num)
     print(str(length),'x',str(length), 'average number of node is:', nodes/num)
 
-blocks=read.get_blocks('grid14x14.txt')
-# blocks=eight_hundred[11]
-print('14x14')
+blocks=read.get_blocks('grid8x8.txt')
+blocks=eight_hundred[11]
+print('8x8')
 # print(datetime.datetime.now())
-bt_time=0
-bt_h1_time=0
-bt_h2_time=0
-bt_hy_time=0
+fc_time=0
+fc_h1_time=0
+fc_h2_time=0
+fc_hy_time=0
 
-bt_node=0
-bt_h1_node=0
-bt_h2_node=0
-bt_hy_node=0
-# for i in range(3):
-#     blocks=ten_hundred[int(random.random()*len(eight_hundred))]
-# solution=StarList(14*2)
-# back_track.counter=0
-# start=timeit.default_timer()
-# back_track(solution,0,blocks,10)
-# stop=timeit.default_timer()
-# print('back_track time:', stop-start)
-# print('back_track nodes:',back_track.counter)
-# bt_time+= (stop-start)
-# bt_node+=back_track.counter
+fc_node=0
+fc_h1_node=0
+fc_h2_node=0
+fc_hy_node=0
+for i in range(1):
+    blocks=read.get_blocks('grid10x10.txt')
+    solution=StarList(10*2)
+    forward_checking.counter=0
+    start=timeit.default_timer()
+    forward_checking(solution,0,blocks,10)
+    stop=timeit.default_timer()
+    print('forward_checking time:', stop-start)
+    print('forward_checking nodes:',forward_checking.counter)
+    fc_time+= (stop-start)
+    fc_node+=forward_checking.counter
 
-# blocks=read.get_blocks('grid14x14.txt')
-# solution=StarList(14*2)
-# back_track_heuristic_one.counter=0
-# start=timeit.default_timer()
-# back_track_heuristic_one(solution,0,blocks,10)
-# stop=timeit.default_timer()
-# print('back_track h1 time:', stop-start)
-# print('back_track h1 nodes:',back_track_heuristic_one.counter)
-# bt_h1_time+= (stop-start)
-# bt_h1_node+=back_track_heuristic_one.counter
+    blocks=read.get_blocks('grid10x10.txt')
+    solution=StarList(10*2)
+    forward_checking_heuristic_one.counter=0
+    start=timeit.default_timer()
+    forward_checking_heuristic_one(solution,0,blocks,10)
+    stop=timeit.default_timer()
+    print('forward_checking h1 time:', stop-start)
+    print('forward_checking h1 nodes:',forward_checking_heuristic_one.counter)
+    fc_h1_time+= (stop-start)
+    fc_h1_node+=forward_checking_heuristic_one.counter
 
-# blocks=read.get_blocks('grid14x14.txt')
-# solution=StarList(14*2)
-# back_track_heuristic_two.counter=0
-# start=timeit.default_timer()
-# back_track_heuristic_two(solution,0,blocks,10)
-# stop=timeit.default_timer()
-# print('back_track h2 time:', stop-start)
-# print('back_track h2 nodes:',back_track_heuristic_two.counter)
-# bt_h2_time+= (stop-start)
-# bt_h2_node+=back_track_heuristic_two.counter
+    blocks=read.get_blocks('grid10x10.txt')
+    solution=StarList(10*2)
+    forward_checking_heuristic_two.counter=0
+    start=timeit.default_timer()
+    forward_checking_heuristic_two(solution,0,blocks,10)
+    stop=timeit.default_timer()
+    print('forward_checking h2 time:', stop-start)
+    print('forward_checking h2 nodes:',forward_checking_heuristic_two.counter)
+    fc_h2_time+= (stop-start)
+    fc_h2_node+=forward_checking_heuristic_two.counter
 
-blocks=read.get_blocks('grid14x14.txt')
-solution=StarList(14*2)
-back_track_heuristic_hybrid.counter=0
-start=timeit.default_timer()
-back_track_heuristic_hybrid(solution,0,blocks,10)
-stop=timeit.default_timer()
-print('back_track hybrid time:', stop-start)
-print('back_track hybrid nodes:',back_track_heuristic_hybrid.counter)
-bt_hy_time+= (stop-start)
-bt_hy_node+=back_track_heuristic_hybrid.counter
+    blocks=read.get_blocks('grid10x10.txt')
+    solution=StarList(10*2)
+    forward_checking_heuristic_hybrid.counter=0
+    start=timeit.default_timer()
+    forward_checking_heuristic_hybrid(solution,0,blocks,10)
+    stop=timeit.default_timer()
+    print('forward_checking hybrid time:', stop-start)
+    print('forward_checking hybrid nodes:',forward_checking_heuristic_hybrid.counter)
+    fc_hy_time+= (stop-start)
+    fc_hy_node+=forward_checking_heuristic_hybrid.counter
 
 print('--------------------------------------')
 
-print('time: bt, bt_h1, bt_h2, bt_hy')
-print(bt_time,bt_h1_time,bt_h2_time,bt_hy_time)
+print('time: fc, fc_h1, fc_h2, fc_hy')
+print(fc_time,fc_h1_time,fc_h2_time,fc_hy_time)
 
-print('node: bt, bt_h1, bt_h2, bt_hy')
-print(bt_node,bt_h1_node,bt_h2_node,bt_hy_node)
+print('node: fc, fc_h1, fc_h2, fc_hy')
+print(fc_node,fc_h1_node,fc_h2_node,fc_hy_node)

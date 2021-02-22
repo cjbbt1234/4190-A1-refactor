@@ -208,7 +208,8 @@ def h1_most_constrained(sol, iterator, blocks, length):
     for i in range(int(sol.get_count() / 2), length):  # iterative for all unsigned blocks
         if len(blocks[i]) < min_length:  # find the current smallest block
             min_length = len(blocks[i])
-            min_array = [i]
+            min_array = []
+            min_array.append(i)
             min_index = i
         elif len(blocks[i]) == min_length:
             min_array.append(i)
