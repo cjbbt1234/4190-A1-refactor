@@ -48,9 +48,11 @@ def forward_checking_heuristic_one(sol, iterator, blocks, length):
             if sol.is_consistent(LIMIT):
                 temp_copy = deep_copy_2d(blocks)
                 remove_neighbors(position_one, temp_copy, length)
+                # discard position in other blocks which conflict with current assignment
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
+                    # check if other unsigned blocks are still have position to put their stars
                     temp = forward_checking_heuristic_one(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp
@@ -89,9 +91,11 @@ def forward_checking_heuristic_two(sol, iterator, blocks, length):
             if sol.is_consistent(LIMIT):
                 temp_copy = deep_copy_2d(blocks)
                 remove_neighbors(position_one, temp_copy, length)
+                # discard position in other blocks which conflict with current assignment
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
+                    # check if other unsigned blocks are still have position to put their stars
                     temp = forward_checking_heuristic_two(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp
@@ -129,9 +133,11 @@ def forward_checking_heuristic_hybrid(sol, iterator, blocks, length):
             if sol.is_consistent(LIMIT):
                 temp_copy = deep_copy_2d(blocks)
                 remove_neighbors(position_one, temp_copy, length)
+                # discard position in other blocks which conflict with current assignment
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
+                    # check if other unsigned blocks are still have position to put their stars
                     temp = forward_checking_heuristic_hybrid(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp

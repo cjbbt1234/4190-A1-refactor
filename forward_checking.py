@@ -1,5 +1,3 @@
-
-
 from helper_method import *
 
 LIMIT = 2
@@ -30,10 +28,12 @@ def forward_checking(sol, iterator, blocks, length):
             sol.set_star(index_two, position_two, block_two)
             if sol.is_consistent(LIMIT):  # if current assigned stars are consistent
                 temp_copy = deep_copy_2d(blocks)
-                remove_neighbors(position_one, temp_copy, length)
+                remove_neighbors(position_one, temp_copy,
+                                 length)  # discard position in other blocks which conflict with current assignment
                 remove_neighbors(position_two, temp_copy, length)
                 remove_col_and_row(sol, temp_copy, length)
                 if check_remain_domain(sol, temp_copy):
+                    # check if other unsigned blocks are still have position to put their stars
                     temp = forward_checking(sol, iterator + 1, temp_copy, length)
                     if temp is not None:
                         result = temp
