@@ -103,10 +103,11 @@ def solve_puzzle(length, blocks, fnc):
     stop = timeit.default_timer()
     print(fnc.__name__, ': Time cost: ', stop - start, 'second')
     print('Have', iteration, 'iterations')
-    print('Solution is:', solution.get_solution_list())
-    print()
-    print()
-    # draw_solution(blocks, solution.get_solution_list())
+    if solution.get_count() == length*2:
+        print('Solution is:', solution.get_solution_list())
+        draw_solution(blocks, solution.get_solution_list())
+    else:
+        print('No Solution found !')
     # Draw the puzzle and solution in UI, please remember the time you watch the result will also count in total
     # running time of the process. This will case abort from this process when the UI display time reach 10 minute.
     # But the display time will not count in recursion time. When you close the UI, it will return and go for next.
@@ -144,15 +145,26 @@ if __name__ == '__main__':
     file_name_2 = "grid10x10.txt"
     file_name_3 = "grid14x14.txt"
 
-    puzzle = get_blocks(file_name_1)
-    size = get_size(puzzle)
-    side_length = get_length(size)
+    file_list = [file_name_1,file_name_2,file_name_3]
 
-    process_solve_puzzle(side_length, puzzle, back_track_std)
-    process_solve_puzzle(side_length, puzzle, back_track_h1)
-    process_solve_puzzle(side_length, puzzle, back_track_h2)
-    process_solve_puzzle(side_length, puzzle, back_track_hybrid)
-    process_solve_puzzle(side_length, puzzle, forward_check_std)
-    process_solve_puzzle(side_length, puzzle, forward_check_h1)
-    process_solve_puzzle(side_length, puzzle, forward_check_h2)
-    process_solve_puzzle(side_length, puzzle, forward_check_hybrid)
+    for curr_puzzle in file_list:
+        print("Begin to solve ",curr_puzzle)
+        puzzle = get_blocks(curr_puzzle)
+        size = get_size(puzzle)
+        side_length = get_length(size)
+
+        process_solve_puzzle(side_length, puzzle, forward_check_hybrid)
+        # solve the puzzle use forward checking with hybrid heuristics, which I believe is the fast one
+
+        # if you want to try other functions
+        # process_solve_puzzle(side_length, puzzle, back_track_std)
+        # process_solve_puzzle(side_length, puzzle, back_track_h1)
+        # process_solve_puzzle(side_length, puzzle, back_track_h2)
+        # process_solve_puzzle(side_length, puzzle, back_track_hybrid)
+        # process_solve_puzzle(side_length, puzzle, forward_check_std)
+        # process_solve_puzzle(side_length, puzzle, forward_check_h1)
+        # process_solve_puzzle(side_length, puzzle, forward_check_h2)
+
+        print('Finish solve ', curr_puzzle)
+        print()
+

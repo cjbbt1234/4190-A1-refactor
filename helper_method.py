@@ -203,14 +203,11 @@ def h1_most_constrained(sol, iterator, blocks, length):
     :return: A candidate list contain all combinations of 2 of the next fewest possible options left block
     """
     min_length = float('inf')
-    min_index = -1
     min_array = []
     for i in range(int(sol.get_count() / 2), length):  # iterative for all unsigned blocks
         if len(blocks[i]) < min_length:  # find the current smallest block
             min_length = len(blocks[i])
-            min_array = []
-            min_array.append(i)
-            min_index = i
+            min_array = [i]
         elif len(blocks[i]) == min_length:
             min_array.append(i)
     new_index = random.choice(min_array)  # choose one of the smallest block
