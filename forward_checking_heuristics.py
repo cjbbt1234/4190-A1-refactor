@@ -74,7 +74,6 @@ def forward_checking_heuristic_two(sol, iterator, blocks, length):
     """
 
     result = None
-    print(sol)
     if sol.get_size() == sol.get_count():
         result = sol
     else:
