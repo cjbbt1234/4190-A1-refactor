@@ -23,7 +23,7 @@ def back_track(sol, iterator, blocks, length):
             index_two = iterator * 2 + 1
             (position_one, position_two) = i  # the get two cells in a block
             block_one = search_block_num(blocks, position_one)
-            block_two = search_block_num(blocks, position_two)  # find which block a,b belongs to
+            block_two = search_block_num(blocks, position_two)  # find which block index_one and index_two belongs to
             sol.set_star(index_one, position_one, block_one)
             sol.set_star(index_two, position_two, block_two)
             if sol.is_consistent(LIMIT):  # if current assigned stars are consistent

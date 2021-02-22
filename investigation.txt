@@ -1,0 +1,10 @@
+14x14
+                back_track      back_track_h1       back_track_h2       back_track_hybrid       forward_checking      forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
+time                >10min          276.94             >10min                 42.24                    >10min              0.072                       >10min                     0.018                  354644%
+number of nodes        x             3878                  x                     515                        x                 44                           x                        18                     7085%
+
+
+10x10
+                back_track      back_track_h1       back_track_h2       back_track_hybrid       forward_checking      forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
+time                11.15           0.98              49.63                  1.24                      0.49                  0.088                       2.01                     0.028                   2408%
+number of nodes      6075            149              21607                   98                      1082                    251                        4069                       60                    501%

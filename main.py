@@ -8,7 +8,7 @@ from backtrack_heuristics import *
 from forward_checking import forward_checking
 from forward_checking_heuristics import *
 
-WAIT_TIME = 10
+WAIT_TIME = 600
 LIMIT = 2
 
 
@@ -106,7 +106,7 @@ def solve_puzzle(length, blocks, fnc):
     print('Solution is:', solution.get_solution_list())
     print()
     print()
-    draw_solution(blocks, solution.get_solution_list())
+    # draw_solution(blocks, solution.get_solution_list())
     # Draw the puzzle and solution in UI, please remember the time you watch the result will also count in total
     # running time of the process. This will case abort from this process when the UI display time reach 10 minute.
     # But the display time will not count in recursion time. When you close the UI, it will return and go for next.

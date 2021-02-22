@@ -96,7 +96,7 @@ blocks=read.get_blocks('grid14x14.txt')
 solution=StarList(14*2)
 back_track_heuristic_hybrid.counter=0
 start=timeit.default_timer()
-back_track_heuristic_hybrid(solution,0,blocks,10)
+back_track_heuristic_hybrid(solution,0,blocks,14)
 stop=timeit.default_timer()
 print('back_track hybrid time:', stop-start)
 print('back_track hybrid nodes:',back_track_heuristic_hybrid.counter)
