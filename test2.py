@@ -22,32 +22,6 @@ fourteen_hundred=[[[155, 169, 141, 127], [194, 193, 180, 192, 181, 179, 178, 191
 ,[[171, 170, 169, 155, 184, 185, 183, 156], [68, 69, 70, 67, 56, 42, 55, 82, 84, 54, 81, 98, 112, 83, 53], [30, 44, 58, 72, 57, 31, 59, 43, 71, 45, 32, 73, 17, 29, 15, 1, 16, 2], [114, 100, 99, 128, 86, 115, 101, 85, 129, 87, 142, 113, 143, 141, 127], [124, 123, 110, 96, 109, 97, 95, 111, 94, 80], [89, 103, 117, 75, 74, 131, 60, 116, 102, 61, 130, 46, 88, 118, 132], [48, 62, 34, 63, 35, 20, 21, 47, 36, 22, 8, 7, 49, 33, 19, 5, 4, 6, 50, 18, 3], [137, 151, 150, 136, 122, 108, 135, 134, 120, 133, 148, 121, 119, 147], [158, 157, 172, 186, 159, 173, 145, 160, 144, 174, 175, 146, 188, 187, 189, 161], [196, 182, 168, 195, 194, 181, 180, 166], [178, 179, 193, 165, 164, 192, 177, 191, 163, 149, 190, 176, 162], [77, 78, 91, 64, 65, 66, 90, 76, 79, 105, 104, 51, 37, 38, 93, 52, 39, 92, 107, 106], [26, 27, 41, 25, 13, 12, 28, 14, 11, 24, 40, 10, 9, 23], [153, 167, 152, 154, 138, 140, 126, 139, 125]]
 ]
 
-def test_five_puzzle(battles,num,length):
-    test_set=battles[0:num]
-    for i in test_set:
-        solution=StarList(length*2)
-        result=forward_checking_heuristic_hybrid(solution, 0, i, length)
-        if result is None:
-            raise Exception("puzzle has no solution")
-    timer=0
-    nodes=0
-    # for i in test_set:
-    for i in range(num):
-        i = battles[int(random.random()*len(battles))]
-
-        solution=StarList(length*2)
-        forward_checking.counter=0
-        start=timeit.default_timer()
-        forward_checking(solution,0,i,length)
-        stop=timeit.default_timer()
-        timer += (stop-start)
-        nodes += forward_checking.counter
-    print(str(length),'x',str(length), 'average time is:', timer/num)
-    print(str(length),'x',str(length), 'average number of node is:', nodes/num)
-
-blocks=read.get_blocks('grid8x8.txt')
-blocks=eight_hundred[11]
-print('8x8')
 # print(datetime.datetime.now())
 fc_time=0
 fc_h1_time=0
@@ -58,23 +32,19 @@ fc_node=0
 fc_h1_node=0
 fc_h2_node=0
 fc_hy_node=0
-for i in range(100):
-    print('****************************')
-    blocks=eight_hundred[i]
-    solution=StarList(8*2)
-    forward_checking.counter=0
-    start=timeit.default_timer()
-    forward_checking(solution,0,blocks,8)
-    stop=timeit.default_timer()
-    print('forward_checking time:', stop-start)
-    print('forward_checking nodes:',forward_checking.counter)
-    fc_time+= (stop-start)
-    fc_node+=forward_checking.counter
 
-    solution=StarList(8*2)
+list_size=14*2
+battle_length=14
+
+for i in [1,2,3]:
+    print('****************************')
+    blocks=fourteen_hundred[i]
+
+    blocks=deep_copy_2d( fourteen_hundred[i])
+    solution=StarList(list_size)
     forward_checking_heuristic_one.counter=0
     start=timeit.default_timer()
-    forward_checking_heuristic_one(solution,0,blocks,8)
+    forward_checking_heuristic_one(solution,0,blocks,battle_length)
     stop=timeit.default_timer()
     print('forward_checking h1 time:', stop-start)
     print('forward_checking h1 nodes:',forward_checking_heuristic_one.counter)
@@ -82,10 +52,11 @@ for i in range(100):
     fc_h1_time+= (stop-start)
     fc_h1_node+=forward_checking_heuristic_one.counter
 
-    solution=StarList(8*2)
+    blocks=deep_copy_2d( fourteen_hundred[i])
+    solution=StarList(list_size)
     forward_checking_heuristic_two.counter=0
     start=timeit.default_timer()
-    forward_checking_heuristic_two(solution,0,blocks,8)
+    forward_checking_heuristic_two(solution,0,blocks,battle_length)
     stop=timeit.default_timer()
     print('forward_checking h2 time:', stop-start)
     print('forward_checking h2 nodes:',forward_checking_heuristic_two.counter)
@@ -93,10 +64,11 @@ for i in range(100):
     fc_h2_time+= (stop-start)
     fc_h2_node+=forward_checking_heuristic_two.counter
 
-    solution=StarList(8*2)
+    blocks=deep_copy_2d( fourteen_hundred[i])
+    solution=StarList(list_size)
     forward_checking_heuristic_hybrid.counter=0
     start=timeit.default_timer()
-    forward_checking_heuristic_hybrid(solution,0,blocks,8)
+    forward_checking_heuristic_hybrid(solution,0,blocks,battle_length)
     stop=timeit.default_timer()
     print('forward_checking hybrid time:', stop-start)
     print('forward_checking hybrid nodes:',forward_checking_heuristic_hybrid.counter)
@@ -108,7 +80,7 @@ for i in range(100):
 print('--------------------------------------')
 
 print('time: fc, fc_h1, fc_h2, fc_hy')
-print(fc_time,fc_h1_time,fc_h2_time,fc_hy_time)
+print(fc_time,fc_h1_time,fc_h2_time,fc_hy_time,sep='\t')
 
 print('node: fc, fc_h1, fc_h2, fc_hy')
-print(fc_node,fc_h1_node,fc_h2_node,fc_hy_node)
+print(fc_node,fc_h1_node,fc_h2_node,fc_hy_node,sep='\t')

@@ -1,15 +1,22 @@
 14x14
-                back_track      back_track_h1       back_track_h2       back_track_hybrid       forward_checking      forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
-time                >10min          276.94             >10min                 42.24                    >10min              0.072                       >10min                     0.018                  354644%
-number of nodes        x             3878                  x                     515                        x                 44                           x                        18                     7085%
+                    back_track_h1       back_track_h2       back_track_hybrid            forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
+time                     276.94             >10min                 42.24                             0.072                 >10min                   0.018                    354544%
+number of nodes         3878                  x                     515                             44                       x                        18                      7085%
 
 
 10x10
-                back_track      back_track_h1       back_track_h2       back_track_hybrid       forward_checking      forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
-time                11.15           0.98              49.63                  1.24                      0.49                  0.088                       2.01                     0.028                   2408%
-number of nodes      6075            149              21607                   98                      1082                    251                        4069                       60                    501%
+                    back_track_h1       back_track_h2       back_track_hybrid             forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
+time                      40.8              34                   7.1                            0.3                         6.64                     0.13                      1058%
+number of nodes            7466             6062                   1040                             450                        8281                    206                      63%
 
 8x8
-                back_track      back_track_h1       back_track_h2       back_track_hybrid       forward_checking      forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
-time                1.5             0.5                1.05                  1.23                      0.126                  0.01                       0.277                     0.016                   997%
-number of nodes     973             269                396                    461                      333                     32                        595                        44                     209%
+                      back_track_h1       back_track_h2       back_track_hybrid            forward_checking_h1       forward_checking_h2       forward_checking_hybrid       percentage
+time                       0.5                1.35                  1.17                             0.0094                     0.23                     0.018                 1073%
+number of nodes            284                575                    510                               30                        504                       47                   136%
+
+cost_of_fc=forward_checking_h1+forward_checking_h2+forward_checking_hybrid
+cost_of_bt=back_track_h1+back_track_h2+back_track_hybrid
+percentage=(cost_of_bt - cost_of_fc) / cost_of_fc
+
+
+Overall, forward checking has much faster speed than the backtrack. It is forward checking can great remove a lot of position in the map such that it can reduce the search space. Heuristic 1 is better than heuristic 2 in average, and hybrid heuristic is the most stable one. Forward checking with hybrid(H3) has best performance in average.
