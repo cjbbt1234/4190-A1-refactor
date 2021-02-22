@@ -106,41 +106,6 @@ def remove_col_and_row(sol, block, length):
                         l.remove(j)
 
 
-# def check_remain_domain(sol, block):
-#     result = True
-#     length = int(sol.get_size() / 2)
-#     un_sign_block = sol.get_count()
-#     for i in range(un_sign_block, length):
-#         domain_count = len(block[i])
-#         if domain_count > 0:
-#             min_value = min(block[i])
-#             curr_block = block[i]
-#             if domain_count <= 2 and min_value+1 in curr_block:
-#                 result = False
-#                 break
-#             elif domain_count >= 5:
-#                 continue
-#             else:
-#                 if domain_count == 3:
-#                     if (min_value + 1 in curr_block and (
-#                             min_value + length in curr_block or min_value + length + 1 in curr_block)):
-#                         result = False
-#                         break
-#                     elif (min_value + length in block[i] and (
-#                             min_value + length - 1 in curr_block or min_value + length + 1 in curr_block)):
-#                         result = False
-#                         break
-#                 elif domain_count == 4:
-#                     if (
-#                             min_value + 1 in curr_block and min_value + length in curr_block and min_value + length + 1 in curr_block):
-#                         result = False
-#                         break
-#         else:
-#             result = False
-#             break
-#     return result
-
-
 def check_remain_domain(sol, block):
     """
     This function will check after current assignment, if there still possible solutions for the blocks wait for assignment
@@ -229,31 +194,31 @@ def get_neighbor(position, length):
 
 def h1_most_constrained(sol, iterator, blocks, length):
     """
-
+    find the next block which has the fewest possible options left
 
     :param sol: current solution star list
     :param blocks: blocks information, is a 2d list
     :param length: length of star battle map, 8x8 map has length 8
     :param iterator: record which block we are working on
-    :return:
+    :return: A candidate list contain all combinations of 2 of the next fewest possible options left block
     """
     min_length = float('inf')
     min_index = -1
     min_array = []
-    for i in range(int(sol.get_count() / 2), length):
-        if len(blocks[i]) < min_length:
+    for i in range(int(sol.get_count() / 2), length):  # iterative for all unsigned blocks
+        if len(blocks[i]) < min_length:  # find the current smallest block
             min_length = len(blocks[i])
             min_array = [i]
             min_index = i
         elif len(blocks[i]) == min_length:
             min_array.append(i)
-    new_index = random.choice(min_array)
-    if iterator != new_index:
+    new_index = random.choice(min_array)  # choose one of the smallest block
+    if iterator != new_index:  # swap the smallest block to the next assigned block position
         swap_a = blocks[new_index]
         swap_b = blocks[iterator]
         blocks[iterator] = swap_a
         blocks[new_index] = swap_b
-    candidate = list(combinations(blocks[iterator], 2))
+    candidate = list(combinations(blocks[iterator], 2))  # form combination of 2 stars position in this block
     return candidate
 
 
