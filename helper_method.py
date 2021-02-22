@@ -129,30 +129,40 @@ def remove_col_and_row(sol, block, length):
 
 
 def check_remain_domain(sol, block):
+    """
+    This function will check after current assignment, if there still possible solutions for the blocks wait for assignment
+
+    :param sol: the solution star list
+    :param block: current block which discard all conflict position in the puzzle
+    :return: Boolean
+    """
     result = True
     length = int(sol.get_size() / 2)
     un_sign_block = sol.get_count()
-    for i in range(un_sign_block, length):
+    for i in range(un_sign_block, length):  # check the unassigned blocks
         domain_count = len(block[i])
-        if domain_count >= 5:
+        if domain_count >= 5:  # number of available space in current blocks >5, must have possible assignment for two stars
             continue
-        elif domain_count <= 1:
+        elif domain_count <= 1: # number of available space in current blocks <=1,  impossible assignment for two stars
             result = False
             break
         else:
-            min_value = min(block[i])
+            min_value = min(block[i])  # find the min value of the position in the block, check some of its neighbours
             curr_block = block[i]
             right = math.ceil(min_value / length) == math.ceil((min_value + 1) / length) and min_value + 1 in curr_block
-            down = min_value + length in curr_block
+            # if there is a node on the right of min node
+            down = min_value + length in curr_block  # if there is a node under the min node
             down_left = math.ceil((min_value + length - 1) / length) == math.ceil(
                 (min_value + length) / length) and min_value + length - 1 in curr_block
+            # if there is a node on the down and left of min node
             down_right = math.ceil((min_value + length + 1) / length) == math.ceil(
                 (min_value + length) / length) and min_value + length + 1 in curr_block
-            if domain_count == 2:
+            # if there is a node on the down and right of min node
+            if domain_count == 2:  # if only two remain nodes and they are connected, false
                 if right or down:
                     result = False
                     break
-            elif domain_count == 3:
+            elif domain_count == 3:  # if only three remain nodes and they are connected in 4 types of "L" shape, false
                 if down:
                     if right or down_left or down_right:
                         result = False
@@ -160,7 +170,7 @@ def check_remain_domain(sol, block):
                 elif down_right and right:
                     result = False
                     break
-            elif domain_count == 4:
+            elif domain_count == 4:  # if only four remain nodes and they are connected in square shape, false
                 if right and down and down_right:
                     result = False
                     break
